@@ -4,6 +4,7 @@
 <h1> Voting </h1>
 <form method="post" action="">
     <table>
+    <tr>
     {% for thing in zipped_list %}
     {% with thing.0 as object %}
     {% with thing.1 as form %}
@@ -15,6 +16,7 @@
     {% endwith %}
     {% endwith %}
     {% endfor %}
+    <tr>
     </table>
 <input type="submit" value="Vote!" />
 </form>

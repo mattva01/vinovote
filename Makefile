@@ -3,7 +3,7 @@
 BOOTSTRAP_PYTHON=python2.6
 
 .PHONY: build
-build: installed
+build: installed collectstatic
 
 .PHONY: bootstrap
 bootstrap installed: 
@@ -16,7 +16,7 @@ update:
 
 
 .PHONY: run
-run: build
+run: build 
 	bin/python manage.py syncdb
 	bin/python manage.py runserver 0.0.0.0:8000
 	
@@ -27,6 +27,7 @@ clean:
 	rm -rf bin
 	rm -rf include
 	rm -rf lib
+	rm -rf static/*
 	rm lib64
 	rm vinodatabase
 	rm installed
@@ -36,4 +37,8 @@ clean:
 .PHONY: ubuntu-environment
 ubuntu-environment:
 	sudo apt-get install git build-essential
+
+.PHONY : collectstatic
+collectstatic vinovoter/static:
+	bin/python manage.py collectstatic --noinput
 
