@@ -6,8 +6,8 @@ class WineVariety(models.Model):
    COLOR_CHOICES = (
     ('Red', 'Red'),
     ('White', 'White'),
-    ('Rose', 'Rose'),
-    ('Blended', 'Blended'),
+    #('Rose', 'Rose'),
+    #('Blended', 'Blended'),
     )
    color = models.CharField(max_length=20, choices=(COLOR_CHOICES))
    style = models.CharField(max_length=20)
