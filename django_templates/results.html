@@ -1,0 +1,37 @@
+{% extends 'bones.html' %}
+
+{% block title %} Voting Results {% endblock %}
+
+{% block content %}
+<h1>Results</h1>
+
+<table>
+{% for tuple in ratinglist %}
+{% with tuple.0 as label %}
+{% with tuple.1 as rating %}
+<tr>
+<td>{{label}}</td>
+<td>{{rating|floatformat}}</td>
+</tr>
+{% endwith %}
+{% endwith %}
+{% endfor %}
+</table>
+
+
+<h3>Winner: {{winningwine.winenum.upper}} </h3>
+<ul>
+<li>Grape: {{winningwine.type.style}}</li>
+<li>Vineyard: {{winningwine.vineyard}}</li>
+<li>Region: {{winningwine.region}}</li>
+<li>Year: {{winningwine.year}}</li>
+<li>Owner: {% for taster in winningwine.taster_set.all %}{{taster}} {% endfor %}</li>
+</ul>
+
+<h3> Most Accurate Taster : {{winningtaster}} </h3>
+<ul>
+<li>Number correct: {{winningtasternum}} out of {{winecount}}</li>
+</ul>
+<a href="/" >Back to Main Menu</a>
+{% endblock %}
+

@@ -1,0 +1,28 @@
+{% extends "bones.html" %}
+
+{% block title %}Wine Party Registration{% endblock %}
+
+{% block content %}
+<h1>Wine Party Guest Registration</h1>
+
+<form action="/taster/register/" method="post">
+{% csrf_token %}
+
+<p>Please provide the following information:</p>
+
+<fieldset>
+  <legend>Your party information</legend>
+  <div>
+  {{firstform.errors}}
+  <label for="id_first-name">First Guest:</label>
+  {{firstform.name}}
+  </div>
+  <div>
+  {{secondform.errors}}
+  <label for="id_second-name">Second Guest:</label>
+  {{secondform.name}}(Optional)
+  </div>
+<button type="submit">Next (Register Wine)</button>
+
+</form>
+{% endblock %}

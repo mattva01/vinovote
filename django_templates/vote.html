@@ -1,0 +1,21 @@
+{% extends "bones.html" %}
+{% block title %} Vote! {% endblock %}
+{% block content %}
+<h1> Voting </h1>
+<form method="post" action="">
+    <table>
+    {% for thing in zipped_list %}
+    {% with thing.0 as object %}
+    {% with thing.1 as form %}
+    <div>
+    {{form.rating.errors}}
+    {{form.styleguess.errors}}
+    {{object}}{{form.rating}}{{form.styleguess}}
+    </div>
+    {% endwith %}
+    {% endwith %}
+    {% endfor %}
+    </table>
+<input type="submit" value="Vote!" />
+</form>
+{% endblock %}

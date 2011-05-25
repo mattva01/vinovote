@@ -1,0 +1,53 @@
+{% extends "bones.html" %}
+
+{% block scripts %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+
+<script charset="utf-8" type="text/javascript">
+  // This code fetches values dynamically via json and overwrites the 2 blank forms below
+  $(function(){
+    $(document).ready(function(){
+      $.getJSON("/json/wineinfo/",{}, function(j) {
+        var options = '<option value="">--------&nbsp;</option>';
+        for (var i = 0; i < j.length; i++) {
+          options += '<option value="' + j[i].color + '">' + j[i].color + '</option>';
+        }
+        $("#id_color").html(options);
+        $("#id_color option:first").attr('selected', 'selected');
+      })
+    })
+  })
+  
+  $(function(){
+    $("select#id_color").change(function(){
+      $.getJSON("/json/wineinfo/",{color: $(this).val(), view: 'json'}, function(j) {
+        var options = '<option value="">--------&nbsp;</option>';
+        for (var i = 0; i < j.length; i++) {
+          options += '<option value="' + j[i].fields.style + '">' + j[i].fields.style + '</option>';
+        }
+        $("#id_style").html(options);
+        $("#id_style option:first").attr('selected', 'selected');
+      })
+      $("#id_color").attr('selected', 'selected');
+    })
+  })
+</script>
+{% endblock %}
+
+{% block content %}
+<form action="/taster/{{tasterid}}/winereg/" method="post">{% csrf_token %}
+
+{% if extra %}
+<input type='hidden' name='extra' value={{extra}} />
+
+{% endif %}
+<p><label for="id_color">Color:</label> <select name="color" id="id_color"> 
+<option value=""></option> 
+</select></p> 
+<p><label for="id_style">Style:</label> <select name="style" id="id_style"> 
+<option value=""></option> 
+</select></p> 
+{{form.as_p}}
+<input type="submit" value="Submit" /> 
+</form>
+{% endblock %}

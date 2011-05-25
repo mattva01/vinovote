@@ -1,0 +1,22 @@
+{% extends "bones.html" %}
+
+{% block title %}Wine Party Lookup{% endblock %}
+
+{% block content %}
+<h1>Wine Party Guest Lookup</h1>
+
+<form action="/vote/" method="post">
+{% csrf_token %}
+
+<p>Please enter the following information exactly as it was entered at registration:</p>
+
+<fieldset>
+  <legend>Your Name</legend>
+  {{form.errors}}
+  <label for="id_name">Guest name:</label>
+  <input id="id_name" name="name" type="text" size="60" /><br />
+
+<button type="submit">Next (Vote for Wines)</button>
+
+</form>
+{% endblock %}
