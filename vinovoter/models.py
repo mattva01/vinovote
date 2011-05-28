@@ -70,7 +70,6 @@ class Vote(models.Model):
 class WineForm(forms.Form):
     year        = forms.IntegerField(min_value=1000,max_value=datetime.date.today().year)
     vineyard  = forms.CharField(max_length=60)
-    region = CountryForm.CountryField()
 class TasterForm(forms.ModelForm):
     class Meta:
         model = Taster

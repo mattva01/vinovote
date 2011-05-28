@@ -39,7 +39,8 @@ def winereg(request,id):
             bottle = WineBottle()
             bottle.year = form.cleaned_data['year']
             bottle.vineyard = form.cleaned_data['vineyard']
-            bottle.region = form.cleaned_data['region']
+            bottle.country = Country.objects.get(id=request.POST.get("country"))
+            bottle.region = State.objects.get(id=request.POST.get("state"))
             bottle.type = WineVariety.objects.get(color=request.POST.get("color"),style=request.POST.get("style"))
             bottle_count =0
             for wine_type in WineVariety.objects.filter(color=request.POST.get("color")):
