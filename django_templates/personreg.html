@@ -12,17 +12,23 @@
 
 <fieldset>
   <legend>Your party information</legend>
-  <div>
-  {{firstform.errors}}
-  <label for="id_first-name">First Guest:</label>
-  {{firstform.name}}
-  </div>
-  <div>
-  {{secondform.errors}}
-  <label for="id_second-name">Second Guest:</label>
-  {{secondform.name}}(Optional)
-  </div>
-<button type="submit">Next (Register Wine)</button>
-
+  <table cellspacing="0" cellpadding="3">
+  <tbody valign="top">
+  <tr>
+    <td align="right"><label for="id_first-name">First Guest:</label></td>
+    <td>{{firstform.name}}</td>
+    <td>{{firstform.errors}}</td>
+  </tr>
+  <tr>
+    <td align="right"><label for="id_second-name">Second Guest:</label></td>
+    <td>{{secondform.name}} (Optional)</td>
+    <td>{{secondform.errors}}</td>
+  </tr>
+  <tr>
+  <td colspan="3" align="center"><button type="submit">Next (Register Wine)</button></td>
+  </tr>
+  </tbody>
+  </table>
+</fieldset>
 </form>
 {% endblock %}

@@ -1,29 +1,34 @@
 {% extends "bones.html" %}
 
 {% block scripts %}
-<script src="/static/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="/static/jquery-1.6.1.min.js"></script>
 
 <script charset="utf-8" type="text/javascript">
-  // This code fetches values dynamically via json and overwrites the 2 blank forms below
+  // This code fetches values dynamically via json and overwrites 
+  // the 2 blank forms below
   $(function(){
     $(document).ready(function(){
       $.getJSON("/json/wineinfo/",{}, function(j) {
         var options = '<option value="">--------&nbsp;</option>';
         for (var i = 0; i < j.length; i++) {
-          options += '<option value="' + j[i].color + '">' + j[i].color + '</option>';
+          options += '<option value="' + j[i].color + '">';
+          options += j[i].color;
+          options += '</option>';
         }
         $("#id_color").html(options);
         $("#id_color option:first").attr('selected', 'selected');
       })
     })
   })
-  
+
   $(function(){
     $("select#id_color").change(function(){
       $.getJSON("/json/wineinfo/",{color: $(this).val(), view: 'json'}, function(j) {
         var options = '<option value="">--------&nbsp;</option>';
         for (var i = 0; i < j.length; i++) {
-          options += '<option value="' + j[i].fields.style + '">' + j[i].fields.style + '</option>';
+          options += '<option value="' + j[i].fields.style + '">';
+          options += j[i].fields.style;
+          options += '</option>';
         }
         $("#id_style").html(options);
         $("#id_style option:first").attr('selected', 'selected');
@@ -31,6 +36,51 @@
       $("#id_color").attr('selected', 'selected');
     })
   })
+______________________________________________________________________________
+  $(function(){
+    $(document).ready(function(){
+        var options = '<option value="">--------&nbsp;</option>';
+        for (var i = 1910; i < 2011; i++) {
+          options += '<option value="' + i + '">';
+          options += i;
+          options += '</option>';
+        }
+        $("#id_year").html(options);
+        $("#id_year option:first").attr('selected', 'selected');
+    })
+  })
+
+  $(function(){
+    $(document).ready(function(){
+      $.getJSON("/json/wineinfo/",{}, function(j) {
+        var options = '<option value="">--------&nbsp;</option>';
+        for (var i = 0; i < j.length; i++) {
+          options += '<option value="' + j[i].country + '">';
+          options += j[i].country;
+          options += '</option>';
+        }
+        $("#id_country").html(options);
+        $("#id_country option:first").attr('selected', 'selected');
+      })
+    })
+  })
+
+  $(function(){
+    $(document).ready(function(){
+      $.getJSON("/json/wineinfo/",{}, function(j) {
+        var options = '<option value="">--------&nbsp;</option>';
+        for (var i = 0; i < j.length; i++) {
+          options += '<option value="' + j[i].state + '">';
+          options += j[i].state;
+          options += '</option>';
+        }
+        $("#id_state").html(options);
+        $("#id_state option:first").attr('selected', 'selected');
+      })
+    })
+  })
+______________________________________________________________________________
+
 </script>
 {% endblock %}
 
@@ -38,16 +88,52 @@
 <form action="/taster/{{tasterid}}/winereg/" method="post">{% csrf_token %}
 
 {% if extra %}
-<input type='hidden' name='extra' value={{extra}} />
-
+<input type='hidden' name='extra' value='{{extra}}' />
 {% endif %}
-<p><label for="id_color">Color:</label> <select name="color" id="id_color"> 
-<option value=""></option> 
-</select></p> 
-<p><label for="id_style">Style:</label> <select name="style" id="id_style"> 
-<option value=""></option> 
-</select></p> 
-{{form.as_p}}
-<input type="submit" value="Submit" /> 
+
+<fieldset>
+  <legend>Wine information</legend>
+  <table cellspacing="0" cellpadding="3">
+  <tbody valign="top">
+  <tr>
+    <td align="right"><label for="id_color">Color:</label></td>
+    <td><select name="color" id="id_color">
+        <option value=""></option> 
+        </select></td>
+  </tr>
+  <tr>
+    <td align="right"><label for="id_style">Style:</label></td>
+    <td><select name="style" id="id_style"> 
+        <option value=""></option> 
+        </select></td>
+  </tr>
+  <tr>
+    <td align="right"><label for="id_year">Year:</label></td>
+    <td><select name="year" id="id_year">
+        <option value=""></option>
+        </select></td>
+  </tr>
+  <tr>
+    <td align="right"><label for="id_vineyard">Vineyard:</label></td>
+    <td><input name="vineyard" id="id_vineyard" type="text" maxlength="60" /></td>
+  </tr>
+  <tr>
+    <td align="right"><label for="id_country">Country:</label></td>
+    <td><select name="country" id="id_country">
+        <option value=""></option>
+        </select></td>
+  </tr>
+  <tr>
+    <td align="right"><label for="id_state">State:</label></td>
+    <td><select name="state" id="id_state">
+        <option value=""></option>
+        </select></td>
+  </tr>
+  <tr>
+  <td colspan="2"><input type="submit" value="Submit" />
+  </tr>
+  </tbody>
+  </table>
+</fieldset>
 </form>
 {% endblock %}
