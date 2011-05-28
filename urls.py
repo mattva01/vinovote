@@ -15,11 +15,11 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    url(r'^admin/', include(admin.site.urls)),
+   url(r'^admin/', include(admin.site.urls)),
    url(r'^vote/$','vinovoter.views.vote_lookup'),
    url(r'^taster/register/$','vinovoter.views.personreg'),
-   url(r'^taster/(?P<id>\d+)/winereg/(?P<winenum>\w+)/$','vinovoter.views.wineregcomplete'),
    url(r'^taster/(?P<id>\d+)/winereg/$','vinovoter.views.winereg'),
+   url(r'^taster/(?P<id>\d+)/winereg/(?P<winenum>\w+)/$','vinovoter.views.wineregcomplete'),
    url(r'^taster/(?P<id>\d+)/vote/$','vinovoter.views.vote'),
    #url(r'^taster/\d+/winereg/$','vinovoter.views.winereg'),
    url(r'^json/wineinfo/','vinovoter.views.winejson'),
