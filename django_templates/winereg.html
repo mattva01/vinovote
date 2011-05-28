@@ -33,7 +33,7 @@
       $.getJSON("/json/regioninfo/",{}, function(j) {
         var options = '<option value="">--------&nbsp;</option>';
         for (var i = 0; i < j.length; i++) {
-          options += '<option value="' + j[i].fields.pk + '">';
+          options += '<option value="' + j[i].pk + '">';
           options += j[i].fields.f_name;
           options += '</option>';
         }
@@ -64,7 +64,7 @@
       $.getJSON("/json/regioninfo/",{country: $(this).val(), view: 'json'}, function(j) {
         var options = '<option value="">--------&nbsp;</option>';
         for (var i = 0; i < j.length; i++) {
-          options += '<option value="' + j[i].fields.pk + '">';
+          options += '<option value="' + j[i].pk + '">';
           options += j[i].fields.f_name;
           options += '</option>';
         }
@@ -124,7 +124,7 @@
         </select></td>
   </tr>
   <tr>
-  <td colspan="2"><input type="submit" value="Submit" />
+  <td colspan="2" align="center"><button type="submit">Submit</button></td>
   </tr>
   </tbody>
   </table>
