@@ -1,8 +1,10 @@
 {% extends "bones.html" %}
 {% block title %} Vote! {% endblock %}
 {% block content %}
-<h1> Voting </h1>
+<h1>Voting</h1>
 <form method="post" action="">
+<fieldset>
+  <legend>Enter your votes and guesses</legend>
     <table>
     <tr>
     {% for thing in zipped_list %}
@@ -16,8 +18,9 @@
     {% endwith %}
     {% endwith %}
     {% endfor %}
-    <tr>
+    </tr>
     </table>
-<input type="submit" value="Vote!" />
+    <p><button type="submit">Vote!</button>
+<fieldset>
 </form>
 {% endblock %}
