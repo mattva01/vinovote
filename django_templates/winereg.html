@@ -19,17 +19,29 @@
         }
         $("#id_color").html(options);
         $("#id_color option:first").attr('selected', 'selected');
+      })
 
-        options = '<option value="">--------&nbsp;</option>';
-        for (var i = 1910; i < 2011; i++) {
-          options += '<option value="' + i + '">';
-          options += i;
+      options = '<option value="">--------&nbsp;</option>';
+      for (var i = 1910; i < 2011; i++) {
+        options += '<option value="' + i + '">';
+        options += i;
+        options += '</option>';
+      }
+      $("#id_year").html(options);
+      $("#id_year option:first").attr('selected', 'selected');
+// ___________________________________________________________________________
+      $.getJSON("/json/regioninfo/",{}, function(j) {
+        var options = '<option value="">--------&nbsp;</option>';
+        for (var i = 0; i < j.length; i++) {
+          options += '<option value="' + j[i].country + '">';
+          options += j[i].country;
           options += '</option>';
         }
-        $("#id_year").html(options);
-        $("#id_year option:first").attr('selected', 'selected');
-
+        $("#id_country").html(options);
+        $("#id_country option:first").attr('selected', 'selected');
       })
+// ____________________________________________________________________________
+
     })
   })
 
@@ -52,16 +64,6 @@
 // ___________________________________________________________________________
 //$(function(){
 //  $(document).ready(function(){
-//    $.getJSON("/json/wineinfo/",{}, function(j) {
-//      var options = '<option value="">--------&nbsp;</option>';
-//      for (var i = 0; i < j.length; i++) {
-//        options += '<option value="' + j[i].country + '">';
-//        options += j[i].country;
-//        options += '</option>';
-//      }
-//      $("#id_country").html(options);
-//      $("#id_country option:first").attr('selected', 'selected');
-//    })
 //  })
 //})
 
