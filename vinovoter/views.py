@@ -102,7 +102,7 @@ def winejson(request):
    return HttpResponse (data)
 def vote_lookup(request):
     if request.method == "POST":
-
+        form = TasterForm(request.POST)
         name = request.POST.get('name')
         if Taster.objects.filter(name=name).exists():
             taster = Taster.objects.get(name=name)
