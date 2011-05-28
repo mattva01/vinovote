@@ -2,7 +2,7 @@ import logging
 from django.shortcuts import render_to_response
 from django.http import HttpResponse , HttpResponseRedirect
 from django.core import serializers
-from vinovoter.models import Taster,WineForm, VoteForm, TasterForm,  WineVariety, WineBottle , Vote
+from vinovoter.models import Taster,WineForm, VoteForm, TasterForm,  WineVariety, WineBottle , Vote, Country, State
 from django.core.urlresolvers import reverse
 import json
 from django.forms import ValidationError
@@ -78,7 +78,26 @@ def wineregcomplete(request,id,winenum):
     winenum = winenum.upper()
 
     return render_to_response('wineregcomplete.html', {'winenum':winenum})
+    
+def regionjson(request):
+   # if the jquery wants the types for a specific color, give it to them
+   if request.GET.get("country"):
+      data = serializers.serialize("json", State.objects.filter(f_country=request.GET.get("country")))
+   # otherwise, give them a  list of countries
+   else:
+      known_countries= set()
+      processed_results = []
 
+      for item in Country.objects.values('f_name'):
+         country = item['f_name']
+         if country in known_countries:
+             continue
+         else:
+             processed_results.append(item)
+             known_countries.add(country)
+
+      data = json.dumps(processed_results)
+   return HttpResponse (data)
 
 # This view returns JSON for jquery to` populate the color and style fields of the wine registration form
 def winejson(request):
@@ -99,7 +118,7 @@ def winejson(request):
              known_colors.add(color)
 
       data = json.dumps(processed_results)
-   return HttpResponse (data)
+   return HttpResponse(data)
 def vote_lookup(request):
     if request.method == "POST":
         form = TasterForm(request.POST)
