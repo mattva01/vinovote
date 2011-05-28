@@ -85,18 +85,7 @@ def regionjson(request):
       data = serializers.serialize("json", State.objects.filter(f_country=request.GET.get("country")))
    # otherwise, give them a  list of countries
    else:
-      known_countries= set()
-      processed_results = []
-
-      for item in Country.objects.values('f_name'):
-         country = item['f_name']
-         if country in known_countries:
-             continue
-         else:
-             processed_results.append(item)
-             known_countries.add(country)
-
-      data = json.dumps(processed_results)
+      data= serializers.serialize("json",Country.objects.all())
    return HttpResponse (data)
 
 # This view returns JSON for jquery to` populate the color and style fields of the wine registration form
