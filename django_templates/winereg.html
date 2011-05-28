@@ -9,7 +9,9 @@
   $(function(){
     $(document).ready(function(){
       $.getJSON("/json/wineinfo/",{}, function(j) {
-        var options = '<option value="">--------&nbsp;</option>';
+        var options;
+
+        options = '<option value="">--------&nbsp;</option>';
         for (var i = 0; i < j.length; i++) {
           options += '<option value="' + j[i].color + '">';
           options += j[i].color;
@@ -17,6 +19,16 @@
         }
         $("#id_color").html(options);
         $("#id_color option:first").attr('selected', 'selected');
+
+        options = '<option value="">--------&nbsp;</option>';
+        for (var i = 1910; i < 2011; i++) {
+          options += '<option value="' + i + '">';
+          options += i;
+          options += '</option>';
+        }
+        $("#id_year").html(options);
+        $("#id_year option:first").attr('selected', 'selected');
+
       })
     })
   })
@@ -36,50 +48,38 @@
       $("#id_color").attr('selected', 'selected');
     })
   })
-______________________________________________________________________________
-  $(function(){
-    $(document).ready(function(){
-        var options = '<option value="">--------&nbsp;</option>';
-        for (var i = 1910; i < 2011; i++) {
-          options += '<option value="' + i + '">';
-          options += i;
-          options += '</option>';
-        }
-        $("#id_year").html(options);
-        $("#id_year option:first").attr('selected', 'selected');
-    })
-  })
 
-  $(function(){
-    $(document).ready(function(){
-      $.getJSON("/json/wineinfo/",{}, function(j) {
-        var options = '<option value="">--------&nbsp;</option>';
-        for (var i = 0; i < j.length; i++) {
-          options += '<option value="' + j[i].country + '">';
-          options += j[i].country;
-          options += '</option>';
-        }
-        $("#id_country").html(options);
-        $("#id_country option:first").attr('selected', 'selected');
-      })
-    })
-  })
+// ___________________________________________________________________________
+//$(function(){
+//  $(document).ready(function(){
+//    $.getJSON("/json/wineinfo/",{}, function(j) {
+//      var options = '<option value="">--------&nbsp;</option>';
+//      for (var i = 0; i < j.length; i++) {
+//        options += '<option value="' + j[i].country + '">';
+//        options += j[i].country;
+//        options += '</option>';
+//      }
+//      $("#id_country").html(options);
+//      $("#id_country option:first").attr('selected', 'selected');
+//    })
+//  })
+//})
 
-  $(function(){
-    $(document).ready(function(){
-      $.getJSON("/json/wineinfo/",{}, function(j) {
-        var options = '<option value="">--------&nbsp;</option>';
-        for (var i = 0; i < j.length; i++) {
-          options += '<option value="' + j[i].state + '">';
-          options += j[i].state;
-          options += '</option>';
-        }
-        $("#id_state").html(options);
-        $("#id_state option:first").attr('selected', 'selected');
-      })
-    })
-  })
-______________________________________________________________________________
+//$(function(){
+//  $(document).ready(function(){
+//    $.getJSON("/json/wineinfo/",{}, function(j) {
+//      var options = '<option value="">--------&nbsp;</option>';
+//      for (var i = 0; i < j.length; i++) {
+//        options += '<option value="' + j[i].state + '">';
+//        options += j[i].state;
+//        options += '</option>';
+//      }
+//      $("#id_state").html(options);
+//      $("#id_state option:first").attr('selected', 'selected');
+//    })
+//  })
+//})
+// ___________________________________________________________________________
 
 </script>
 {% endblock %}
