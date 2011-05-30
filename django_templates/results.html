@@ -23,7 +23,10 @@
 <ul>
 <li>Grape: {{winningwine.type.style}}</li>
 <li>Vineyard: {{winningwine.vineyard}}</li>
-<li>Region: {{winningwine.region}}</li>
+<li>Country: {{winningwine.country}}</li>
+{% if winningwine.region %}
+<li>State: {{winningwine.region}}</li>
+{% endif %}
 <li>Year: {{winningwine.year}}</li>
 <li>Owner: {% for taster in winningwine.taster_set.all %}{{taster}} {% endfor %}</li>
 </ul>
