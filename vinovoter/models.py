@@ -69,7 +69,7 @@ class Vote(models.Model):
     rating      = models.IntegerField(max_length=2)
     voter       = models.ForeignKey(Taster)
     wine        = models.ForeignKey(WineBottle)
-    styleguess  = models.ForeignKey(WineVariety)
+    styleguess  = models.ForeignKey(WineVariety,blank=True,null=True)
     def __unicode__(self):
         return "Vote for %s by %s" % (self.wine.winenum.upper(),self.voter.name)
 

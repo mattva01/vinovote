@@ -145,21 +145,14 @@ def vote(request,id):
             vote = object[1]
             wine = object[0]
             if request.POST.get("%s-rating"% wine) != u"":
-                if vote.is_valid():
- 
-                   new_vote = vote.save(commit=False)
-                   new_vote.voter = Taster.objects.get(pk=id)
-                   new_vote.wine = wine
-                   new_vote.save()
-                else:
-                   errors = True
-            else:
-                print "boo!"
-        if not errors:
-            current_taster=Taster.objects.get(id=id)
-            current_taster.voted = True
-            current_taster.save()
-            return HttpResponseRedirect('/thanks/')
+               new_vote = vote.save(commit=False)
+               new_vote.voter = Taster.objects.get(pk=id)
+               new_vote.wine = wine
+               new_vote.save()
+        current_taster=Taster.objects.get(id=id)
+        current_taster.voted = True
+        current_taster.save()
+        return HttpResponseRedirect('/thanks/')
     else:
         redvotes = [VoteForm(prefix=str(x), instance=Vote()) for x in redwinelist]
         whitevotes = [VoteForm(prefix=str(x), instance=Vote()) for x in whitewinelist]
