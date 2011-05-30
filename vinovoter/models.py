@@ -2,6 +2,13 @@ from django.db import models
 from django import forms
 import datetime
 import CountryForm
+
+NUMCHOICES=[]
+
+for x in range(60,101):
+    numtuple = (x,str(x))
+    NUMCHOICES.append(numtuple)
+
 class Country(models.Model):
     f_isonum = models.IntegerField(null=True, blank=True)
     f_iso2 = models.CharField(unique=True, max_length=512)
@@ -66,7 +73,8 @@ class Vote(models.Model):
     def __unicode__(self):
         return "Vote for %s by %s" % (self.wine.winenum.upper(),self.voter.name)
 
-
+    class Meta:
+        unique_together = ("voter","wine")
 
 class WineForm(forms.Form):
     year        = forms.IntegerField(min_value=1000,max_value=datetime.date.today().year)
@@ -77,6 +85,7 @@ class TasterForm(forms.ModelForm):
         exclude = ('wine_entry',)
 
 class VoteForm(forms.ModelForm):
+    rating = forms.ChoiceField(choices=NUMCHOICES)
     class Meta:
         model =  Vote
         exclude = ('wine','voter')
