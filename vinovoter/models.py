@@ -55,6 +55,7 @@ class WineBottle(models.Model):
 class Taster(models.Model):
     name        = models.CharField(max_length=60,unique=True)
     wine_entry  = models.ForeignKey(WineBottle,blank=True,null=True)
+    voted       = models.BooleanField(default=False)
     def __unicode__(self):
         return self.name
 class Vote(models.Model):

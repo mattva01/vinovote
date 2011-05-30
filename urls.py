@@ -26,5 +26,6 @@ urlpatterns = patterns('',
    url(r'^json/regioninfo/','vinovoter.views.regionjson'),
    url(r'^$',direct_to_template, {'template': 'index.html'}),
    url(r'^thanks/$',direct_to_template, {'template': 'thanks.html'}),
+   url(r'^error/dupvote/$',direct_to_template, {'template': 'dupvote.html'}),
    url(r'^results/$','vinovoter.views.results' ),
 )

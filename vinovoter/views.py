@@ -127,6 +127,8 @@ def vote_lookup(request):
 
 
 def vote(request,id):
+    if Taster.objects.get(id=id).voted:
+        return HttpResponseRedirect("/error/dupvote/")
     winelist = WineBottle.objects.all().order_by('winenum')
     redwinelist = WineBottle.objects.filter(type__color="Red").order_by('winenum')
     whitewinelist = WineBottle.objects.filter(type__color="White").order_by('winenum')
@@ -141,6 +143,9 @@ def vote(request,id):
                 new_vote.voter = Taster.objects.get(pk=id)
                 new_vote.wine = wine
                 new_vote.save()
+            current_taster=Taster.objects.get(id=id)
+            current_taster.voted = True
+            current_taster.save()
             return HttpResponseRedirect('/thanks/')
     else:
         redvotes = [VoteForm(prefix=str(x), instance=Vote()) for x in redwinelist]
