@@ -28,9 +28,9 @@ clean:
 	rm -rf include
 	rm -rf lib
 	rm -rf static/*
-	rm lib64
-	rm vinodatabase
-	rm installed
+	rm -f lib64
+	rm -f vinodatabase
+	rm -f installed
 	find . -name '*.py[co]' -delete
 # Helpers
 

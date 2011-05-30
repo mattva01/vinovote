@@ -46,7 +46,7 @@ class WineBottle(models.Model):
     type        = models.ForeignKey(WineVariety)
     vineyard    = models.CharField(max_length=60)
     country     = models.ForeignKey(Country)
-    region      = models.ForeignKey(State)
+    region      = models.ForeignKey(State,blank=True,null=True)
     year        = models.IntegerField(max_length=4)
     winenum     = models.CharField(max_length=3)
     def __unicode__(self):
