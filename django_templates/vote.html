@@ -6,34 +6,36 @@
 <fieldset>
   <legend>Enter your votes and guesses</legend>
   <div id="votebox">
-  <div id="redcontain">
-  {% for wine in red_list %}
-  {% with wine.0 as object %}
-  {% with wine.1 as form %}
-  <div>
-  {{form.rating.errors}}
-  {{form.styleguess.errors}}  
-  {{object}}{{form.rating}}{{form.styleguess}}
+    <div id="redcontain">
+    <p style="text-align:center; font-weight:bold; font-variant:small-caps;">Reds</p>
+    {% for wine in red_list %}
+    {% with wine.0 as object %}
+    {% with wine.1 as form %}
+      <div>
+      {{form.rating.errors}}
+      {{form.styleguess.errors}}  
+      {{object}}{{form.rating}}{{form.styleguess}}
+      </div>
+    {% endwith %}
+    {% endwith %}
+    {% endfor %}
+    </div>
+    <div id="whitecontain">
+    <p style="text-align:center; font-weight:bold; font-variant:small-caps;">Whites</p>
+    {% for wine in white_list %}
+    {% with wine.0 as object %}
+    {% with wine.1 as form %}
+      <div>
+      {{form.rating.errors}}
+      {{form.styleguess.errors}}  
+      {{object}}{{form.rating}}{{form.styleguess}}
+      </div>
+    {% endwith %}
+    {% endwith %}
+    {% endfor %}
+    </div>
   </div>
-  {% endwith %}
-  {% endwith %}
-  {% endfor %}
-  </div>
-  <div id="whitecontain">
-  {% for wine in white_list %}
-  {% with wine.0 as object %}
-  {% with wine.1 as form %}
-  <div>
-  {{form.rating.errors}}
-  {{form.styleguess.errors}}  
-  {{object}}{{form.rating}}{{form.styleguess}}
-  </div>
-  {% endwith %}
-  {% endwith %}
-  {% endfor %}
-  </div>  
-  </div>
-  <button id="votebutton" type="submit">Vote!</button>
+  <div style="margin:0 auto; width:100%; clear:both; text-align:center;"><button id="votebutton" type="submit">Vote!</button></div>
 </fieldset>
 </form>
 {% endblock %}
