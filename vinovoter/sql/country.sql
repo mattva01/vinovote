@@ -1,5 +1,3 @@
-PRAGMA foreign_keys=OFF;
-BEGIN TRANSACTION;
 INSERT INTO "vinovoter_countries" VALUES(1,4,'AF','AFG','Afghanistan','T','2011-04-10 09:45:28','2011-04-10 09:45:28',1,1);
 INSERT INTO "vinovoter_countries" VALUES(2,8,'AL','ALB','Albania','T','2011-04-10 09:45:28','2011-04-10 09:45:28',1,1);
 INSERT INTO "vinovoter_countries" VALUES(3,12,'DZ','DZA','Algeria','T','2011-04-10 09:45:28','2011-04-10 09:45:28',1,1);
@@ -244,4 +242,3 @@ INSERT INTO "vinovoter_countries" VALUES(241,732,'EH','ESH','Western Sahara','T'
 INSERT INTO "vinovoter_countries" VALUES(242,887,'YE','YEM','Yemen','T','2011-04-10 09:45:28','2011-04-10 09:45:28',1,1);
 INSERT INTO "vinovoter_countries" VALUES(243,894,'ZM','ZMB','Zambia','T','2011-04-10 09:45:28','2011-04-10 09:45:28',1,1);
 INSERT INTO "vinovoter_countries" VALUES(244,716,'ZW','ZWE','Zimbabwe','T','2011-04-10 09:45:28','2011-04-10 09:45:28',1,1);
-COMMIT;

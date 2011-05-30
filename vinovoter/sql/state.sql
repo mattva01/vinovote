@@ -1,5 +1,3 @@
-PRAGMA foreign_keys=OFF;
-BEGIN TRANSACTION;
 INSERT INTO "vinovoter_states" VALUES(1,233,'AL','Alabama','T','2011-04-10 09:45:28','2011-04-10 09:45:28',1,1);
 INSERT INTO "vinovoter_states" VALUES(2,233,'AK','Alaska','T','2011-04-10 09:45:28','2011-04-10 09:45:28',1,1);
 INSERT INTO "vinovoter_states" VALUES(3,233,'AZ','Arizona','T','2011-04-10 09:45:28','2011-04-10 09:45:28',1,1);
@@ -72,4 +70,3 @@ INSERT INTO "vinovoter_states" VALUES(69,40,'PE','Prince Edward Island','T','201
 INSERT INTO "vinovoter_states" VALUES(70,40,'QC','Quebec','T','2011-04-10 09:45:28','2011-04-10 09:45:28',1,1);
 INSERT INTO "vinovoter_states" VALUES(71,40,'SK','Saskatchewan','T','2011-04-10 09:45:28','2011-04-10 09:45:28',1,1);
 INSERT INTO "vinovoter_states" VALUES(72,40,'YT','Yukon','T','2011-04-10 09:45:28','2011-04-10 09:45:28',1,1);
-COMMIT;
