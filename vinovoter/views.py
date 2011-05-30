@@ -133,16 +133,29 @@ def vote(request,id):
     redwinelist = WineBottle.objects.filter(type__color="Red").order_by('winenum')
     whitewinelist = WineBottle.objects.filter(type__color="White").order_by('winenum')
     if request.method == "POST":
+        errors = False
+        print request.POST
         votes = [VoteForm(request.POST, prefix=str(x), instance=Vote()) for x in winelist]
+        redvotes = [VoteForm(request.POST, prefix=str(x), instance=Vote()) for x in redwinelist]
+        whitevotes = [VoteForm(request.POST, prefix=str(x), instance=Vote()) for x in whitewinelist]
         zipped_list=zip(winelist,votes)
-        if all([vote[1].is_valid() for vote in zipped_list]):
-            for object in zipped_list:
-                vote = object[1]
-                wine = object[0]
-                new_vote = vote.save(commit=False)
-                new_vote.voter = Taster.objects.get(pk=id)
-                new_vote.wine = wine
-                new_vote.save()
+        redzipped_list=zip(redwinelist,votes)
+        whitezipped_list=zip(whitewinelist,votes)
+        for object in zipped_list:
+            vote = object[1]
+            wine = object[0]
+            if request.POST.get("%s-rating"% wine) != u"":
+                if vote.is_valid():
+ 
+                   new_vote = vote.save(commit=False)
+                   new_vote.voter = Taster.objects.get(pk=id)
+                   new_vote.wine = wine
+                   new_vote.save()
+                else:
+                   errors = True
+            else:
+                print "boo!"
+        if not errors:
             current_taster=Taster.objects.get(id=id)
             current_taster.voted = True
             current_taster.save()
