@@ -4,7 +4,7 @@ import datetime
 import CountryForm
 
 NUMCHOICES=[]
-
+NUMCHOICES.append((u"","---"))
 for x in range(60,101):
     numtuple = (x,str(x))
     NUMCHOICES.append(numtuple)
