@@ -143,13 +143,11 @@ def vote(request,id):
                 new_vote.save()
             return HttpResponseRedirect('/thanks/')
     else:
-        votes = [VoteForm(prefix=str(x), instance=Vote()) for x in winelist]
         redvotes = [VoteForm(prefix=str(x), instance=Vote()) for x in redwinelist]
         whitevotes = [VoteForm(prefix=str(x), instance=Vote()) for x in whitewinelist]
         redzipped_list=zip(redwinelist,redvotes)
         whitezipped_list=zip(whitewinelist,whitevotes)
-        zipped_list=zip(winelist,votes)
-    return render_to_response('vote.html', {'zipped_list':zipped_list ,'white_list':whitezipped_list,'red_list':redzipped_list})
+    return render_to_response('vote.html', {'white_list':whitezipped_list,'red_list':redzipped_list})
 def results(request):
     winelist=[]
     correctlist=[]
