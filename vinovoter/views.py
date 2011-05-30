@@ -15,6 +15,7 @@ def personreg(request):
        print request.POST
        if firstform.is_valid():
            if request.POST.get('second-name') != u'':
+
                if secondform.is_valid():
                    print "yay"
                    mainperson=firstform.save()
@@ -80,7 +81,6 @@ def winereg(request,id):
 
 def wineregcomplete(request,id,winenum):
     winenum = winenum.upper()
-
     return render_to_response('wineregcomplete.html', {'winenum':winenum})
     
 def regionjson(request):
@@ -128,6 +128,8 @@ def vote_lookup(request):
 
 def vote(request,id):
     winelist = WineBottle.objects.all().order_by('winenum')
+    redwinelist = WineBottle.objects.filter(type__color="Red").order_by('winenum')
+    whitewinelist = WineBottle.objects.filter(type__color="White").order_by('winenum')
     if request.method == "POST":
         votes = [VoteForm(request.POST, prefix=str(x), instance=Vote()) for x in winelist]
         zipped_list=zip(winelist,votes)
@@ -142,8 +144,12 @@ def vote(request,id):
             return HttpResponseRedirect('/thanks/')
     else:
         votes = [VoteForm(prefix=str(x), instance=Vote()) for x in winelist]
+        redvotes = [VoteForm(prefix=str(x), instance=Vote()) for x in redwinelist]
+        whitevotes = [VoteForm(prefix=str(x), instance=Vote()) for x in whitewinelist]
+        redzipped_list=zip(redwinelist,redvotes)
+        whitezipped_list=zip(whitewinelist,whitevotes)
         zipped_list=zip(winelist,votes)
-    return render_to_response('vote.html', {'zipped_list':zipped_list ,})
+    return render_to_response('vote.html', {'zipped_list':zipped_list ,'white_list':whitezipped_list,'red_list':redzipped_list})
 def results(request):
     winelist=[]
     correctlist=[]

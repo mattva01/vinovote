@@ -5,22 +5,35 @@
 <form method="post" action="">
 <fieldset>
   <legend>Enter your votes and guesses</legend>
-    <table>
-    <tr>
-    {% for thing in zipped_list %}
-    {% with thing.0 as object %}
-    {% with thing.1 as form %}
-    <div>
-    {{form.rating.errors}}
-    {{form.styleguess.errors}}
-    {{object}}{{form.rating}}{{form.styleguess}}
-    </div>
-    {% endwith %}
-    {% endwith %}
-    {% endfor %}
-    </tr>
-    </table>
-    <p><button type="submit">Vote!</button>
+  <div id="votebox">
+  <div id="redcontain">
+  {% for wine in red_list %}
+  {% with wine.0 as object %}
+  {% with wine.1 as form %}
+  <div>
+  {{form.rating.errors}}
+  {{form.styleguess.errors}}  
+  {{object}}{{form.rating}}{{form.styleguess}}
+  </div>
+  {% endwith %}
+  {% endwith %}
+  {% endfor %}
+  </div>
+  <div id="whitecontain">
+  {% for wine in white_list %}
+  {% with wine.0 as object %}
+  {% with wine.1 as form %}
+  <div>
+  {{form.rating.errors}}
+  {{form.styleguess.errors}}  
+  {{object}}{{form.rating}}{{form.styleguess}}
+  </div>
+  {% endwith %}
+  {% endwith %}
+  {% endfor %}
+  </div>  
+  </div>
+  <button id="votebutton" type="submit">Vote!</button>
 </fieldset>
 </form>
 {% endblock %}
