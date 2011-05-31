@@ -5,7 +5,7 @@ import CountryForm
 
 NUMCHOICES=[]
 NUMCHOICES.append((u"","---"))
-for x in range(60,101):
+for x in reversed(range(60,101)):
     numtuple = (x,str(x))
     NUMCHOICES.append(numtuple)
 
@@ -84,8 +84,20 @@ class TasterForm(forms.ModelForm):
         model = Taster
         exclude = ('wine_entry',)
 
-class VoteForm(forms.ModelForm):
+#class VoteForm(forms.ModelForm):
+#    rating = forms.ChoiceField(choices=NUMCHOICES)
+#    class Meta:
+#        model =  Vote
+#        exclude = ('wine','voter')
+class RedVoteForm(forms.ModelForm):
     rating = forms.ChoiceField(choices=NUMCHOICES)
+    styleguess = forms.ModelChoiceField(queryset=WineVariety.objects.filter(color="Red"))
+    class Meta:
+        model =  Vote
+
+class WhiteVoteForm(forms.ModelForm):
+    rating = forms.ChoiceField(choices=NUMCHOICES)
+    styleguess = forms.ModelChoiceField(queryset=WineVariety.objects.filter(color="White"))
     class Meta:
         model =  Vote
         exclude = ('wine','voter')

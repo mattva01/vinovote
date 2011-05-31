@@ -2,7 +2,7 @@ import logging
 from django.shortcuts import render_to_response
 from django.http import HttpResponse , HttpResponseRedirect
 from django.core import serializers
-from vinovoter.models import Taster,WineForm, VoteForm, TasterForm,  WineVariety, WineBottle , Vote, Country, State
+from vinovoter.models import Taster,WineForm, RedVoteForm,WhiteVoteForm, TasterForm,  WineVariety, WineBottle , Vote, Country, State
 from django.core.urlresolvers import reverse
 import json
 from django.forms import ValidationError
@@ -135,12 +135,12 @@ def vote(request,id):
     if request.method == "POST":
         errors = False
         print request.POST
-        votes = [VoteForm(request.POST, prefix=str(x), instance=Vote()) for x in winelist]
-        redvotes = [VoteForm(request.POST, prefix=str(x), instance=Vote()) for x in redwinelist]
-        whitevotes = [VoteForm(request.POST, prefix=str(x), instance=Vote()) for x in whitewinelist]
+        #votes = [VoteForm(request.POST, prefix=str(x), instance=Vote()) for x in winelist]
+        redvotes = [RedVoteForm(request.POST, prefix=str(x), instance=Vote()) for x in redwinelist]
+        whitevotes = [WhiteVoteForm(request.POST, prefix=str(x), instance=Vote()) for x in whitewinelist]
         zipped_list=zip(winelist,votes)
-        redzipped_list=zip(redwinelist,votes)
-        whitezipped_list=zip(whitewinelist,votes)
+        redzipped_list=zip(redwinelist,redvotes)
+        whitezipped_list=zip(whitewinelist,redvotes)
         for object in zipped_list:
             vote = object[1]
             wine = object[0]
@@ -154,8 +154,8 @@ def vote(request,id):
         current_taster.save()
         return HttpResponseRedirect('/thanks/')
     else:
-        redvotes = [VoteForm(prefix=str(x), instance=Vote()) for x in redwinelist]
-        whitevotes = [VoteForm(prefix=str(x), instance=Vote()) for x in whitewinelist]
+        redvotes = [RedVoteForm(prefix=str(x), instance=Vote()) for x in redwinelist]
+        whitevotes = [WhiteVoteForm(prefix=str(x), instance=Vote()) for x in whitewinelist]
         redzipped_list=zip(redwinelist,redvotes)
         whitezipped_list=zip(whitewinelist,whitevotes)
     return render_to_response('vote.html', {'white_list':whitezipped_list,'red_list':redzipped_list})
