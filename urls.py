@@ -3,6 +3,9 @@ from django.conf.urls.defaults import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from django.views.generic.simple import direct_to_template
+from django.views.generic.list_detail import object_list
+from django.views.generic.list_detail import object_detail
+from vinovoter.models import WineBottle
 admin.autodiscover()
 
 
@@ -28,4 +31,6 @@ urlpatterns = patterns('',
    url(r'^thanks/$',direct_to_template, {'template': 'thanks.html'}),
    url(r'^error/dupvote/$',direct_to_template, {'template': 'dupvote.html'}),
    url(r'^results/$','vinovoter.views.results' ),
+   url(r'^results/all/$',object_list,{'queryset':WineBottle.objects.all().order_by('winenum'),'template_name':'winebottle_list.html'} ),
+   url(r'^results/(?P<object_id>\d+)/$',object_detail,{'queryset': WineBottle.objects.all(),'template_name':'winebottle_object.html'} ),
 )

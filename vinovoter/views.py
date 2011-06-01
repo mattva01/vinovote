@@ -31,7 +31,6 @@ def personreg(request):
     secondform = TasterForm(prefix="second")
     return render_to_response('personreg.html', {'firstform': firstform,'secondform':secondform})
 
-
 def winereg(request,id):
     if request.method == 'POST':
         form = WineForm(request.POST)
@@ -161,25 +160,42 @@ def vote(request,id):
     return render_to_response('vote.html', {'white_list':whitezipped_list,'red_list':redzipped_list})
 def results(request):
     winelist=[]
+    redwinelist=[]
+    whitewinelist=[]
     correctlist=[]
+    redwinecount = WineBottle.objects.filter(type__color="Red").count()
+    whitewinecount = WineBottle.objects.filter(type__color="White").count()
     winecount = WineBottle.objects.all().count()
-    for  bottle in WineBottle.objects.all():
+    for  bottle in WineBottle.objects.filter(type__color="Red"):
         rating=bottle.vote_set.aggregate(Avg('rating'))
-        winetup = (bottle.winenum.upper(), rating['rating__avg'])
-        winelist.append(winetup)
+        winetup = (bottle, rating['rating__avg'])
+        redwinelist.append(winetup)
+    for  bottle in WineBottle.objects.filter(type__color="White"):
+        rating=bottle.vote_set.aggregate(Avg('rating'))
+        winetup = (bottle, rating['rating__avg'])
+        whitewinelist.append(winetup)
+
     for taster in Taster.objects.all():
-       numcorrect = 0
+       rednumcorrect = 0
+       whitenumcorrect = 0
        for vote in taster.vote_set.all():
            if vote.styleguess == vote.wine.type:
-               print "yay!"
-               numcorrect +=1
-       correctlist.append((taster.name,numcorrect))
-    sorted_wine_list = sorted(winelist,key = itemgetter(1),reverse=True)
-    sorted_correct_list = sorted(correctlist,key = itemgetter(1),reverse=True)
-    winner=WineBottle.objects.get(winenum=sorted_wine_list[0][0].lower())
-    stylewinner=sorted_correct_list[0][0]
-    stylewinner_num=sorted_correct_list[0][1]
-    return render_to_response('results.html',{'ratinglist':winelist,'winningwine':winner,'winningtaster':stylewinner,'winningtasternum':stylewinner_num,'winecount':winecount})
+               if vote.wine.type.color == "Red":    
+                   rednumcorrect += 1
+               else:
+                   whitenumcorrect += 1 
+       correctlist.append((taster.name,rednumcorrect,whitenumcorrect))
+    redsorted_wine_list = sorted(redwinelist,key = itemgetter(1),reverse=True)
+    whitesorted_wine_list = sorted(whitewinelist,key = itemgetter(1),reverse=True)
+    redsorted_correct_list = sorted(correctlist,key = itemgetter(1),reverse=True)
+    whitesorted_correct_list = sorted(correctlist,key = itemgetter(2),reverse=True)
+    redwinner=redsorted_wine_list[0][0]
+    whitewinner=whitesorted_wine_list[0][0]
+    redstylewinner=redsorted_correct_list[0][0]
+    whitestylewinner=whitesorted_correct_list[0][0]
+    redstylewinner_num=redsorted_correct_list[0][1]
+    whitestylewinner_num=whitesorted_correct_list[0][2]
+    return render_to_response('results.html',{'redtop3':redsorted_wine_list[0:3],'whitetop3':whitesorted_wine_list[0:3],'ratinglist':winelist,'redwinningwine':redwinner,'whitewinningwine':whitewinner,'redwinningtaster':redstylewinner,'redwinningtasternum':redstylewinner_num,'whitewinningtaster':whitestylewinner,'whitewinningtasternum':whitestylewinner_num,'redwinecount':redwinecount,'whitewinecount':whitewinecount})
 
 
 

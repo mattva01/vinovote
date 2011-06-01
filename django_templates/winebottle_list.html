@@ -1,0 +1,14 @@
+{% extends 'bones.html' %}
+{% block title %} Bottle List {% endblock %}
+{% block content %}
+
+{% for wine in object_list %}
+<h3>{{wine.winenum.upper}}</h3>
+<ul>
+<li>Color:{{wine.type.color}}</li>
+<li>Variety:{{wine.type.style}}</li>
+<li>Vineyard:{{wine.vineyard}}</li>
+<li>Year:{{wine.year}}</li>
+</ul>
+{% endfor %}
+{% endblock %}

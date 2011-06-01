@@ -1,0 +1,12 @@
+{% extends 'bones.html' %}
+{% block title %} {{object.winenum}} {% endblock %}
+{% block content %}
+
+<h1>{{object.winenum.upper}}</h1>
+<ul>
+<li>Color:{{object.type.color}}</li>
+<li>Variety:{{object.type.style}}</li>
+<li>Vineyard:{{object.vineyard}}</li>
+<li>Year:{{object.year}}</li>
+</ul>
+{% endblock %}

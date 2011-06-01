@@ -6,11 +6,25 @@
 <h1>Results</h1>
 
 <table>
-{% for tuple in ratinglist %}
-{% with tuple.0 as label %}
+<h3>Red Top 3</h3>
+{% for tuple in redtop3 %}
+{% with tuple.0 as wine %}
 {% with tuple.1 as rating %}
 <tr>
-<td>{{label}}</td>
+<td><a href="/results/{{wine.id}}/">{{wine.winenum.upper}}</a></td>
+<td>{{rating|floatformat}}</td>
+</tr>
+{% endwith %}
+{% endwith %}
+{% endfor %}
+</table>
+<table>
+<h3>White Top 3</h3>
+{% for tuple in whitetop3 %}
+{% with tuple.0 as wine %}
+{% with tuple.1 as rating %}
+<tr>
+<td><a href="/results/{{wine.id}}/">{{wine.winenum.upper}}</a></td>
 <td>{{rating|floatformat}}</td>
 </tr>
 {% endwith %}
@@ -19,21 +33,39 @@
 </table>
 
 
-<h3>Winner: {{winningwine.winenum.upper}} </h3>
+
+<h3>Red Winner: {{redwinningwine.winenum.upper}} </h3>
 <ul>
-<li>Grape: {{winningwine.type.style}}</li>
-<li>Vineyard: {{winningwine.vineyard}}</li>
-<li>Country: {{winningwine.country}}</li>
-{% if winningwine.region %}
-<li>State: {{winningwine.region}}</li>
+<li>Grape: {{redwinningwine.type.style}}</li>
+<li>Vineyard: {{redwinningwine.vineyard}}</li>
+<li>Country: {{redwinningwine.country}}</li>
+{% if redwinningwine.region %}
+<li>State: {{redwinningwine.region}}</li>
 {% endif %}
-<li>Year: {{winningwine.year}}</li>
-<li>Owner: {% for taster in winningwine.taster_set.all %}{{taster}} {% endfor %}</li>
+<li>Year: {{redwinningwine.year}}</li>
+<li>{%if redwinningwine.taster_set.all.count = 1%}Owner:{% else %} Owners: {% endif %} {% for taster in redwinningwine.taster_set.all %}{{taster}}{% if not forloop.last %},{% endif %} {% endfor %}</li>
 </ul>
 
-<h3> Most Accurate Taster : {{winningtaster}} </h3>
+
+<h3>White Winner: {{whitewinningwine.winenum.upper}} </h3>
 <ul>
-<li>Number correct: {{winningtasternum}} out of {{winecount}}</li>
+<li>Grape: {{whitewinningwine.type.style}}</li>
+<li>Vineyard: {{whitewinningwine.vineyard}}</li>
+<li>Country: {{whitewinningwine.country}}</li>
+{% if whitewinningwine.region %}
+<li>State: {{whitewinningwine.region}}</li>
+{% endif %}
+<li>Year: {{whitewinningwine.year}}</li>
+<li>Owner: {% for taster in whitewinningwine.taster_set.all %}{{taster}} {% endfor %}</li>
+</ul>
+
+<h3> Most Accurate Red Taster : {{redwinningtaster}} </h3>
+<ul>
+<li>Number correct: {{redwinningtasternum}} out of {{redwinecount}}</li>
+</ul>
+<h3> Most Accurate White Taster : {{whitewinningtaster}} </h3>
+<ul>
+<li>Number correct: {{whitewinningtasternum}} out of {{whitewinecount}}</li>
 </ul>
 <a href="/" >Back to Main Menu</a>
 {% endblock %}
