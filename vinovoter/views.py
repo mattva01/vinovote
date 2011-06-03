@@ -126,6 +126,7 @@ def vote_lookup(request):
 
 
 def vote(request,id):
+    errors = False
     if Taster.objects.get(id=id).voted:
         return HttpResponseRedirect("/error/dupvote/")
     winelist = WineBottle.objects.all().order_by('winenum')
@@ -137,21 +138,38 @@ def vote(request,id):
         #votes = [VoteForm(request.POST, prefix=str(x), instance=Vote()) for x in winelist]
         redvotes = [RedVoteForm(request.POST, prefix=str(x), instance=Vote()) for x in redwinelist]
         whitevotes = [WhiteVoteForm(request.POST, prefix=str(x), instance=Vote()) for x in whitewinelist]
-        zipped_list=zip(winelist,votes)
+        #zipped_list=zip(winelist,votes)
         redzipped_list=zip(redwinelist,redvotes)
-        whitezipped_list=zip(whitewinelist,redvotes)
-        for object in zipped_list:
+        whitezipped_list=zip(whitewinelist,whitevotes)
+        for object in redzipped_list:
             vote = object[1]
             wine = object[0]
             if request.POST.get("%s-rating"% wine) != u"":
-               new_vote = vote.save(commit=False)
-               new_vote.voter = Taster.objects.get(pk=id)
-               new_vote.wine = wine
-               new_vote.save()
-        current_taster=Taster.objects.get(id=id)
-        current_taster.voted = True
-        current_taster.save()
-        return HttpResponseRedirect('/thanks/')
+               if vote.is_valid():
+                   new_vote = vote.save(commit=False)
+                   new_vote.voter = Taster.objects.get(pk=id)
+                   new_vote.wine = wine
+                   new_vote.save()
+               else:
+                   print vote.errors
+                   errors = True
+        for object in whitezipped_list:
+            vote = object[1]
+            wine = object[0]
+            if request.POST.get("%s-rating"% wine) != u"":
+               if vote.is_valid():
+                   new_vote = vote.save(commit=False)
+                   new_vote.voter = Taster.objects.get(pk=id)
+                   new_vote.wine = wine
+                   new_vote.save()
+               else:
+                   print vote.errors
+                   errors = True
+        if not errors:
+            current_taster=Taster.objects.get(id=id)
+            current_taster.voted = True
+            current_taster.save()
+            return HttpResponseRedirect('/thanks/')
     else:
         redvotes = [RedVoteForm(prefix=str(x), instance=Vote()) for x in redwinelist]
         whitevotes = [WhiteVoteForm(prefix=str(x), instance=Vote()) for x in whitewinelist]

@@ -66,7 +66,7 @@ class Taster(models.Model):
     def __unicode__(self):
         return self.name
 class Vote(models.Model):
-    rating      = models.IntegerField(max_length=2)
+    rating      = models.IntegerField(max_length=2,null=True)
     voter       = models.ForeignKey(Taster)
     wine        = models.ForeignKey(WineBottle)
     styleguess  = models.ForeignKey(WineVariety,blank=True,null=True)
@@ -94,10 +94,11 @@ class RedVoteForm(forms.ModelForm):
     styleguess = forms.ModelChoiceField(queryset=WineVariety.objects.filter(color="Red"))
     class Meta:
         model =  Vote
+        exclude = ('wine','voter')
 
 class WhiteVoteForm(forms.ModelForm):
-    rating = forms.ChoiceField(choices=NUMCHOICES)
-    styleguess = forms.ModelChoiceField(queryset=WineVariety.objects.filter(color="White"))
+    rating = forms.ChoiceField(choices=NUMCHOICES,required=False)
+    styleguess = forms.ModelChoiceField(queryset=WineVariety.objects.filter(color="White"),required=False)
     class Meta:
         model =  Vote
         exclude = ('wine','voter')
