@@ -213,7 +213,7 @@ def results(request):
     whitestylewinner=whitesorted_correct_list[0][0]
     redstylewinner_num=redsorted_correct_list[0][1]
     whitestylewinner_num=whitesorted_correct_list[0][2]
-    return render_to_response('results.html',{'redtop3':redsorted_wine_list[0:3],'whitetop3':whitesorted_wine_list[0:3],'ratinglist':winelist,'redwinningwine':redwinner,'whitewinningwine':whitewinner,'redstyletop3':redsorted_correct_list[0:3],'whitestyleall':whitesorted_correct_list,'redstyleall':redsorted_correct_list,'whitestyletop3':whitesorted_correct_list[0:3],'redwinningtaster':redstylewinner,'redwinningtasternum':redstylewinner_num,'whitewinningtaster':whitestylewinner,'whitewinningtasternum':whitestylewinner_num,'redwinecount':redwinecount,'whitewinecount':whitewinecount})
+    return render_to_response('results.html',{'allreds':redsorted_wine_list,"allwhites":whitesorted_wine_list,'redtop3':redsorted_wine_list[0:3],'whitetop3':whitesorted_wine_list[0:3],'ratinglist':winelist,'redwinningwine':redwinner,'whitewinningwine':whitewinner,'redstyletop3':redsorted_correct_list[0:3],'whitestyleall':whitesorted_correct_list,'redstyleall':redsorted_correct_list,'whitestyletop3':whitesorted_correct_list[0:3],'redwinningtaster':redstylewinner,'redwinningtasternum':redstylewinner_num,'whitewinningtaster':whitestylewinner,'whitewinningtasternum':whitestylewinner_num,'redwinecount':redwinecount,'whitewinecount':whitewinecount})
 
 
 

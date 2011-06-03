@@ -79,6 +79,43 @@
 <li> {{taster.0}} {{taster.2}}/{{whitewinecount}}</li>
 {% endfor %}
 </ul>
+
+
+
+<table>
+<h3>All Reds </h3>
+{% for tuple in allreds %}
+{% with tuple.0 as wine %}
+{% with tuple.1 as rating %}
+<tr>
+<td><a href="/results/{{wine.id}}/">{{wine.winenum.upper}}</a></td>
+<td>{{rating|floatformat}}</td>
+<td>{% for taster in wine.taster_set.all %}{{taster}}{% if not forloop.last%}, {% endif %}{% endfor %}</td>
+</tr>
+{% endwith %}
+{% endwith %}
+{% endfor %}
+</table>
+
+
+<table>
+<h3>All Whites</h3>
+{% for tuple in allwhites %}
+{% with tuple.0 as wine %}
+{% with tuple.1 as rating %}
+<tr>
+<td><a href="/results/{{wine.id}}/">{{wine.winenum.upper}}</a></td>
+<td>{{rating|floatformat}}</td>
+<td>{% for taster in wine.taster_set.all %}{{taster}}{% if not forloop.last%}, {% endif %}{% endfor %}</td>
+</tr>
+{% endwith %}
+{% endwith %}
+{% endfor %}
+</table>
+
+
+
+
 <h3> Red All Tasters</h3>
 <ul>
 {% for taster in redstyleall %}
