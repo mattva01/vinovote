@@ -67,6 +67,30 @@
 <ul>
 <li>Number correct: {{whitewinningtasternum}} out of {{whitewinecount}}</li>
 </ul>
+<h3> Red Top 3 Tasters </h3>
+<ul>
+{% for taster in redstyletop3 %}
+<li> {{taster.0}} {{taster.1}}/{{redwinecount}}</li>
+{% endfor %}
+</ul>
+<h3> White Top 3 Tasters</h3>
+<ul>
+{% for taster in whitestyletop3 %}
+<li> {{taster.0}} {{taster.2}}/{{whitewinecount}}</li>
+{% endfor %}
+</ul>
+<h3> Red All Tasters</h3>
+<ul>
+{% for taster in redstyleall %}
+<li> {{taster.0}} {{taster.1}}/{{redwinecount}}</li>
+{% endfor %}
+</ul>
+<h3> White All Tasters</h3>
+<ul>
+{% for taster in whitestyleall %}
+<li> {{taster.0}} {{taster.2}}/{{whitewinecount}}</li>
+{% endfor %}
+</ul>
 <a href="/" >Back to Main Menu</a>
 {% endblock %}
 
