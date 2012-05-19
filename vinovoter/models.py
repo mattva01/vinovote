@@ -11,9 +11,9 @@ for x in reversed(range(60,101)):
 
 class Country(models.Model):
     f_isonum = models.IntegerField(null=True, blank=True)
-    f_iso2 = models.CharField(unique=True, max_length=512)
-    f_iso3 = models.CharField(unique=True, max_length=512)
-    f_name = models.CharField(unique=True, max_length=512)
+    f_iso2 = models.CharField(unique=True, max_length=255)
+    f_iso3 = models.CharField(unique=True, max_length=255)
+    f_name = models.CharField(unique=True, max_length=255)
     active = models.CharField(max_length=1, blank=True)
     created_on = models.CharField(max_length=30)
     modified_on = models.CharField(max_length=30)
@@ -25,8 +25,8 @@ class Country(models.Model):
         db_table = u'vinovoter_countries'
 class State(models.Model):
     f_country = models.ForeignKey(Country)
-    f_usps = models.CharField(unique=True, max_length=512)
-    f_name = models.CharField(unique=True, max_length=512)
+    f_usps = models.CharField(unique=True, max_length=255)
+    f_name = models.CharField(unique=True, max_length=255)
     active = models.CharField(max_length=1, blank=True)
     created_on = models.CharField(max_length=30)
     modified_on = models.CharField(max_length=30)
@@ -56,9 +56,11 @@ class WineBottle(models.Model):
     region      = models.ForeignKey(State,blank=True,null=True)
     year        = models.IntegerField(max_length=4)
     winenum     = models.CharField(max_length=3)
+    sortwinenum     = models.IntegerField(max_length=2)
     def __unicode__(self):
         return self.winenum.upper()
-
+    class Meta:
+        ordering = ['sortwinenum']
 class Taster(models.Model):
     name        = models.CharField(max_length=60,unique=True)
     wine_entry  = models.ForeignKey(WineBottle,blank=True,null=True)

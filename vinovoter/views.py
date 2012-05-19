@@ -1,5 +1,6 @@
 import logging
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.http import HttpResponse , HttpResponseRedirect
 from django.core import serializers
 from vinovoter.models import Taster,WineForm, RedVoteForm,WhiteVoteForm, TasterForm,  WineVariety, WineBottle , Vote, Country, State
@@ -49,6 +50,7 @@ def winereg(request,id):
             for wine_type in WineVariety.objects.filter(color=request.POST.get("color")):
                 bottle_count +=wine_type.winebottle_set.count()
             bottle.winenum=request.POST.get("color")[0].lower() + str(bottle_count + 1)
+            bottle.sortwinenum=str(bottle_count)
             try:
                 bottle.full_clean()
             except ValidationError,e:
@@ -71,7 +73,7 @@ def winereg(request,id):
         form = WineForm() # An unbound form
         if request.GET.get("extra"):
             extraid = request.GET.get("extra")
-            return render_to_response('winereg.html', {'form':form,'tasterid':id,'extra':extraid})
+            return render_to_response('winereg.html', {'form':form,'tasterid':id,'extra':extraid},context_instance=RequestContext(request))
 
     return render_to_response('winereg.html', {
         'form': form,'tasterid':id,
@@ -80,7 +82,7 @@ def winereg(request,id):
 
 def wineregcomplete(request,id,winenum):
     winenum = winenum.upper()
-    return render_to_response('wineregcomplete.html', {'winenum':winenum})
+    return render_to_response('wineregcomplete.html', {'winenum':winenum},context_instance=RequestContext(request))
     
 def regionjson(request):
    # if the jquery wants the types for a specific color, give it to them
@@ -122,7 +124,7 @@ def vote_lookup(request):
             HttpResponse("Fail >.<")
     else:
         form = TasterForm()
-    return render_to_response('vote_lookup.html', {'form':form})
+    return render_to_response('vote_lookup.html', {'form':form},context_instance=RequestContext(request))
 
 
 def vote(request,id):
@@ -130,8 +132,8 @@ def vote(request,id):
     if Taster.objects.get(id=id).voted:
         return HttpResponseRedirect("/error/dupvote/")
     winelist = WineBottle.objects.all().order_by('winenum')
-    redwinelist = WineBottle.objects.filter(type__color="Red").order_by('winenum')
-    whitewinelist = WineBottle.objects.filter(type__color="White").order_by('winenum')
+    redwinelist = WineBottle.objects.filter(type__color="Red").order_by('sortwinenum')
+    whitewinelist = WineBottle.objects.filter(type__color="White").order_by('sortwinenum')
     if request.method == "POST":
         errors = False
         print request.POST
@@ -175,7 +177,7 @@ def vote(request,id):
         whitevotes = [WhiteVoteForm(prefix=str(x), instance=Vote()) for x in whitewinelist]
         redzipped_list=zip(redwinelist,redvotes)
         whitezipped_list=zip(whitewinelist,whitevotes)
-    return render_to_response('vote.html', {'white_list':whitezipped_list,'red_list':redzipped_list})
+    return render_to_response('vote.html', {'white_list':whitezipped_list,'red_list':redzipped_list},context_instance=RequestContext(request))
 def results(request):
     winelist=[]
     redwinelist=[]
@@ -213,7 +215,7 @@ def results(request):
     whitestylewinner=whitesorted_correct_list[0][0]
     redstylewinner_num=redsorted_correct_list[0][1]
     whitestylewinner_num=whitesorted_correct_list[0][2]
-    return render_to_response('results.html',{'allreds':redsorted_wine_list,"allwhites":whitesorted_wine_list,'redtop3':redsorted_wine_list[0:3],'whitetop3':whitesorted_wine_list[0:3],'ratinglist':winelist,'redwinningwine':redwinner,'whitewinningwine':whitewinner,'redstyletop3':redsorted_correct_list[0:3],'whitestyleall':whitesorted_correct_list,'redstyleall':redsorted_correct_list,'whitestyletop3':whitesorted_correct_list[0:3],'redwinningtaster':redstylewinner,'redwinningtasternum':redstylewinner_num,'whitewinningtaster':whitestylewinner,'whitewinningtasternum':whitestylewinner_num,'redwinecount':redwinecount,'whitewinecount':whitewinecount})
+    return render_to_response('results.html',{'allreds':redsorted_wine_list,"allwhites":whitesorted_wine_list,'redtop3':redsorted_wine_list[0:3],'whitetop3':whitesorted_wine_list[0:3],'ratinglist':winelist,'redwinningwine':redwinner,'whitewinningwine':whitewinner,'redstyletop3':redsorted_correct_list[0:3],'whitestyleall':whitesorted_correct_list,'redstyleall':redsorted_correct_list,'whitestyletop3':whitesorted_correct_list[0:3],'redwinningtaster':redstylewinner,'redwinningtasternum':redstylewinner_num,'whitewinningtaster':whitestylewinner,'whitewinningtasternum':whitestylewinner_num,'redwinecount':redwinecount,'whitewinecount':whitewinecount},context_instance=RequestContext(request))
 
 
 
